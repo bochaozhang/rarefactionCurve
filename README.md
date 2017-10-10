@@ -35,8 +35,8 @@ Our assumption is clones with larger size are easier to sample. So number of add
 True diversity calculated with default order of 1. The is equivalent to the exponential of Shannon index. Default round of resample is 10. More round is slower but more accurate.
 
 ## Output files
-The code will output one or two csv file(s):
-[subject]-[compartment]-[C*X*]-curve.csv has two columns: number of subsamples and calculated ture diversity
-[subject]-[compartment]-[C*X*].csv: has the C*X* list for [compartment] if not done so previously
-in which *X* denotes the lower bound clone size:
+The code will output one or two csv file(s):  
+[subject]-[compartment]-[C*X*]-curve.csv has two columns: number of subsamples and calculated ture diversity  
+[subject]-[compartment]-[C*X*].csv: has the C*X* list for [compartment] if not done so previously  
+in which *X* denotes the lower bound clone size  
 
