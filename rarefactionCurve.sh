@@ -1,5 +1,3 @@
-# Get parameters needed for calculation
-
 # Get input arguments
 while getopts ":d:s:f:g:t:" opt; do
   case $opt in
@@ -23,7 +21,7 @@ features=$(mysql --defaults-extra-file=security.cnf -h clash.biomed.drexel.edu -
 unique_features=$(echo "${features[@]}" | tr '\n' ' ')
 
 # Get qualified clones
-qualified_file="$db_name-$subject-$feature-C$size_threshold.txt"
+qualified_file="$db_name-$subject-$feature-C$size_threshold.csv"
 if [ -f "$qualified_file" ]; then    # if there is a pre-calculated list, then use it
 	echo "pre-calculated list found"
 	qualified_clones=$(<$qualified_file)	
@@ -62,14 +60,22 @@ sample_ids=$(mysql --defaults-extra-file=security.cnf -h clash.biomed.drexel.edu
 
 # Get qualified clone for each sample in desired feature
 output_file="$subject-$desired_feature-C$size_threshold.csv"
-echo "sample_id,clone_ids" > $output_file
+if [ -f "$output_file" ]; then
+	rm $output_file
+fi
 for sample_id in ${sample_ids}; do	
 	echo "select distinct(clone_id) from sequences where sample_id=$sample_id and functional=1 and clone_id in ($qualified_clones)" > temp.txt
 	clones=$(mysql --defaults-extra-file=security.cnf -h clash.biomed.drexel.edu --database=$db_name -N -B < temp.txt)	
 	rm temp.txt	
 	clones=$(echo "${clones[@]}" | tr '\n' ' ')	
-	echo "$sample_id,$clones" >> $output_file	
+	echo "$sample_id,${clones::-1}," >> $output_file	
 done
+
+# Run python calculation
+python rarefactionCurve.py $output_file
+
+# Remove temp file
+rm $output_file
 
 
 

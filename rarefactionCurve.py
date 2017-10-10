@@ -4,7 +4,7 @@ def main( input_file ):
     """
     diversity = calculateRarefactionCurve(input_file)
     c = input_file.split('.')
-    output_file_name = '_'.join([c[0],'curve'])
+    output_file_name = '-'.join([c[0],'curve'])
     output_file_name = '.'.join([output_file_name,c[1]])
     output_file = open(output_file_name,'w')
     output_file.write('subsample,diversity\n')
@@ -26,7 +26,7 @@ def calculateRarefactionCurve( input_file ):
     samples, clones = readCSV(input_file)
     if len(samples) > 2:
         D = []
-        for k in range(1,len(samples)):            
+        for k in range(1,len(samples)+1):            
             m = selectSamples(samples,k)
             diversity = []
             for subsamples in m:
