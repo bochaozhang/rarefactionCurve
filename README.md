@@ -17,7 +17,7 @@ Calculate true diversity for each number of subsample (from 1 to total number of
 For example
 
 ```
-bash sampleRarefaction.sh -d lp11 -s D207 -f tissue -g BM -t 20
+bash rarefactionCurve.sh -d lp11 -s D207 -f tissue -g BM -t 20
 ```
 
 will calculate true diversity of 1 to 35 subsamples randomly selected in BM C*20* clones, where subsamples are selected randomly for 10 rounds.
@@ -40,3 +40,9 @@ The code will output one or two csv file(s):
 [subject]-[compartment]-[C*X*].csv: has the C*X* list for [compartment] if not done so previously  
 in which *X* denotes the lower bound clone size  
 
+## Draw
+Optional MATALB function to draw rarefaction curve.
+for more information, in MATLAB type
+```
+help drawRarefactionCurve
+```
